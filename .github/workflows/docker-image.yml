@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "large" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "large" ]
 
 jobs:
 
@@ -37,9 +37,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: |
-            ghcr.io/${{ github.repository }}:base
-            ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ github.repository }}:large
 
       - name: Logout from GitHub Container Registry
         run: docker logout ghcr.io

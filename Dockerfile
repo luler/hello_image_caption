@@ -3,7 +3,7 @@ FROM python:3.11-slim
 
 # 设置环境变量
 ENV DEBIAN_FRONTEND=noninteractive
-ENV MODEL_NAME="Salesforce/blip-image-captioning-base"
+ENV MODEL_NAME="Salesforce/blip-image-captioning-large"
 
 # 复制应用代码
 COPY . /app
