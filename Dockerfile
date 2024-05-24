@@ -1,6 +1,10 @@
 # 使用官方的Python基础镜像
 FROM python:3.11-slim
 
+# 设置环境变量
+ENV DEBIAN_FRONTEND=noninteractive
+ENV MODEL_NAME="Salesforce/blip-image-captioning-base"
+
 # 复制应用代码
 COPY . /app
 
@@ -11,7 +15,7 @@ WORKDIR /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 下载模型和处理器
-RUN python3 -c "from transformers import BlipProcessor, BlipForConditionalGeneration; model_name = 'Salesforce/blip-image-captioning-base'; processor = BlipProcessor.from_pretrained(model_name); model = BlipForConditionalGeneration.from_pretrained(model_name)"
+RUN python3 -c "from transformers import BlipProcessor, BlipForConditionalGeneration; import os; model_name = os.getenv('MODEL_NAME'); processor = BlipProcessor.from_pretrained(model_name); model = BlipForConditionalGeneration.from_pretrained(model_name)"
 
 # 暴露端口
 EXPOSE 8000
