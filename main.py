@@ -6,7 +6,7 @@ import typing
 import requests
 import torch
 from PIL import Image
-from fastapi import FastAPI, UploadFile, File, Query
+from fastapi import FastAPI, UploadFile, File, Form
 from pydantic import BaseModel
 from transformers import BlipProcessor, BlipForConditionalGeneration
 
@@ -28,7 +28,7 @@ class CommonResponse(BaseModel):
 @app.post("/api/predict")
 async def get_image_caption(
         file: UploadFile = File(...),
-        target_lang: str = Query(None)
+        target_lang: str = Form(None)
 ):
     # 读取图像文件
     image_bytes = await file.read()
