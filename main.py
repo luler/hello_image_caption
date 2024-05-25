@@ -1,5 +1,6 @@
 import io
 import os
+import re
 import typing
 
 import requests
@@ -40,6 +41,9 @@ async def get_image_caption(
     # 生成描述
     caption = processor.decode(output[0], skip_special_tokens=True)
 
+    # 后处理步骤：移除不合理的前缀
+    caption = clean_caption(caption)
+
     # 支持的语言列表
     supported_langs = [
         "af", "sq", "am", "ar", "hy", "az", "eu", "be", "bn", "bs", "bg", "ca", "ceb", "ny",
@@ -58,6 +62,14 @@ async def get_image_caption(
     return CommonResponse(code=200, data={'result': caption, })
 
 
+# 移除多余的内容
+def clean_caption(caption: str) -> str:
+    # 使用正则表达式移除不合理的前缀
+    cleaned_caption = re.sub(r'\b(arafed|araffe|araff)\b', '', caption)
+    return cleaned_caption.strip()
+
+
+# 翻译工具
 def translate(text: str, target_lang: str) -> str:
     with requests.get('https://lingva.thedaviddelta.com/api/v1/auto/' + target_lang + '/' + text) as response:
         text = ''
