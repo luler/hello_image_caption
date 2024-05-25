@@ -4,7 +4,8 @@ services:
     #    build:
     #      context: .
     #      dockerfile: Dockerfile
-    image: ghcr.io/luler/hello_image_caption:latest
+    #    image: ghcr.io/luler/hello_image_caption:latest
+    image: ghcr.libcuda.so/luler/hello_image_caption:large
     restart: always
     ports:
       - 2233:8000
